@@ -11,6 +11,7 @@ export default React.createClass({
           <li><NavLink to="/" onlyActiveOnIndex>Home</NavLink></li>
           <li><NavLink to="/about">About</NavLink></li>
           <li><NavLink to="/repos">Repos</NavLink></li>
+          <li><NavLink to="/comments">Comments</NavLink></li>
         </ul>
 
         {/* add this */}

@@ -5,6 +5,7 @@ import About from './About'
 import Repos from './Repos'
 import Repo from './Repo'
 import Home from './Home'
+import CommentBox from './CommentBox'
 
 export default (
   <Route path="/" component={App}>
@@ -13,5 +14,6 @@ export default (
       <Route path="/repos/:userName/:repoName" component={Repo}/>
     </Route>
     <Route path="/about" component={About}/>
+    <Route path="/comments" component={CommentBox}/>
   </Route>
 )
