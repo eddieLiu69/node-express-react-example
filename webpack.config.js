@@ -1,7 +1,7 @@
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './index.js',
+  entry: './index.tsx',
 
   output: {
     filename: 'bundle.js',
@@ -10,9 +10,16 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?presets[]=es2015&presets[]=react' }
+      { test: /\.tsx?$/, exclude: /node_modules/, loader: 'ts-loader' }
     ]
   },
+  
+  resolve: {
+    // .js is required for react imports.
+    // .tsx is for our app entry point.
+    // .ts is optional, in case you will be importing any regular ts files.
+    extensions: ['', '.js', '.ts', '.tsx']
+  },  
   
   plugins: process.env.NODE_ENV === 'production' ? [
     new webpack.optimize.DedupePlugin(),

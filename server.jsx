@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var compression = require('compression');
 
-import React from 'react'
+import * as React from 'react'
 // we'll use this to render our app to an html string
 import { renderToString } from 'react-dom/server'
 // and these to match the url to routes and then render

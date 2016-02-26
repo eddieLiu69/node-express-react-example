@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import App from './App'
 import About from './About'
