@@ -12,7 +12,7 @@ class CommentForm extends React.Component<any, any> {
         return (
             <div className="commentForm" >
                 Hello, world!I am a CommentForm.
-            </div>
+                </div>
         );
     }
 }
@@ -22,20 +22,20 @@ class Comment extends React.Component<ICommentProps, any> {
         var rawMarkup = marked(raw, { sanitize: true });
         return { __html: rawMarkup };
     }
-    
+
     render() {
         return (
             <div className="comment" >
                 <h2 className="commentAuthor" >
                     { this.props.author }
-                </h2>
+                    </h2>
                 <span dangerouslySetInnerHTML={ this.rawMarkup(this.props.text) } />
-            </div>
+                </div>
         );
     }
 }
 
-class CommentList extends React.Component<{data: ICommentProps[]}, any> {
+class CommentList extends React.Component<{ data: ICommentProps[] }, any> {
     render() {
         var nodes = this.props.data.map((comment) => <Comment author={comment.author} key={comment.key} text={comment.text} />);
         return (<div className="commentList">{nodes}</div>);
@@ -47,24 +47,40 @@ var data: ICommentProps[] = [
     { key: 2, author: "Jordan Walke", text: "This is *another* comment" }
 ];
 
-class CommentBox extends React.Component<void, any> {
+class CommentBox extends React.Component<{ url: string }, any> {
     private data: ICommentProps[];
+    private url: string = '/api/comments';
 
-    loadData() {
-        this.data = data;
+    getInitialState() {
+        return { data: [] };
     }
 
-    componentWillMount() {
-        this.loadData();
+    loadCommentsFromServer() {
+        $.ajax({
+            url: this.url,
+            dataType: 'json',
+            cache: false,
+            success: (data) => {
+                this.setState({ data: data });
+            },
+            error: (xhr, status, err) => {
+                console.error(this.url, status, err.toString());
+            }
+        });
+    }
+
+    componentDidMount() {
+        this.loadCommentsFromServer();
+        setInterval(this.loadCommentsFromServer, 500);
     }
 
     render() {
         return (
             <div className="commentBox" >
                 <h1>Comments</h1>
-                <CommentList data={ this.data } />
+                <CommentList data={ this.state.data } />
                 <CommentForm />
-            </div>
+                </div>
         );
     }
 }
