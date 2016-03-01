@@ -1,4 +1,5 @@
 var path = require('path');
+var fs = require('fs');
 var express = require('express');
 var compression = require('compression');
 
@@ -8,12 +9,23 @@ import { renderToString } from 'react-dom/server'
 // and these to match the url to routes and then render
 import { match, RouterContext } from 'react-router'
 import routes from './modules/routes'
+var COMMENTS_FILE = path.join(__dirname, 'comments.json');
 
 var app = express();
 var apiRouter = express.Router();
 
 apiRouter.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
+});
+
+apiRouter.get('/comments', function(req, res) {    
+    fs.readFile(COMMENTS_FILE, function(err, data) {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        res.json(JSON.parse(data));
+    });
 });
 
 app.use(compression());

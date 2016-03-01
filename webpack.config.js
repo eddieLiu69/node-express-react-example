@@ -21,9 +21,9 @@ module.exports = {
     extensions: ['', '.js', '.ts', '.tsx']
   },  
   
-  plugins: process.env.NODE_ENV === 'production' ? [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin()
-  ] : [],
+//   plugins: process.env.NODE_ENV === 'production' ? [
+//     new webpack.optimize.DedupePlugin(),
+//     new webpack.optimize.OccurrenceOrderPlugin(),
+//     new webpack.optimize.UglifyJsPlugin()
+//   ] : [],
 }
