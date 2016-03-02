@@ -2,17 +2,20 @@ var path = require('path');
 var fs = require('fs');
 var express = require('express');
 var compression = require('compression');
+var bodyParser = require('body-parser');
 
 import * as React from 'react'
 // we'll use this to render our app to an html string
 import { renderToString } from 'react-dom/server'
 // and these to match the url to routes and then render
 import { match, RouterContext } from 'react-router'
-import routes from './modules/routes'
+// import routes from './modules/routes'
 var COMMENTS_FILE = path.join(__dirname, 'comments.json');
 
 var app = express();
 var apiRouter = express.Router();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 apiRouter.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
@@ -26,6 +29,33 @@ apiRouter.get('/comments', function(req, res) {
         }
         res.json(JSON.parse(data));
     });
+});
+
+apiRouter.post('/comments', function(req, res) {
+  fs.readFile(COMMENTS_FILE, function(err, data) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    var comments = JSON.parse(data);
+    // NOTE: In a real implementation, we would likely rely on a database or
+    // some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
+    // treat Date.now() as unique-enough for our purposes.
+    console.log(req.body);
+    var newComment = {
+      key: Date.now(),
+      author: req.body.author,
+      text: req.body.text,
+    };
+    comments.push(newComment);
+    fs.writeFile(COMMENTS_FILE, JSON.stringify(comments, null, 4), function(err) {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+      res.json(comments);
+    });
+  });
 });
 
 app.use(compression());

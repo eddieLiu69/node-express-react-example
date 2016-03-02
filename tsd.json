@@ -82,6 +82,9 @@
     },
     "marked/marked.d.ts": {
       "commit": "ab2462147a313f69e7118625cfcce21c005fa4af"
+    },
+    "zepto/zepto.d.ts": {
+      "commit": "55c750ace821f85e6643bbdb249dbd0b15a3df78"
     }
   }
 }
