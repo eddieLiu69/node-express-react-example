@@ -6,6 +6,7 @@ import Repos from './Repos'
 import Repo from './Repo'
 import Home from './Home'
 import CommentBox from './CommentBox'
+import FilterableProductTable from './Product'
 
 export default (
   <Route path="/" component={App}>
@@ -15,5 +16,6 @@ export default (
     </Route>
     <Route path="/about" component={About}/>
     <Route path="/comments" component={CommentBox}/>
+    <Route path="/products" component={FilterableProductTable}/>
   </Route>
 )

@@ -13,11 +13,10 @@ export default React.createClass({
           <li><NavLink to="/about">About</NavLink></li>
           <li><NavLink to="/repos">Repos</NavLink></li>
           <li><NavLink to="/comments">Comments</NavLink></li>
+          <li><NavLink to="/products">Products</NavLink></li>
         </ul>
 
-        {/* add this */}
         {this.props.children}
-
       </div>
     )
   }
